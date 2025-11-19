@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Entre les mondes – Textes de réflexion</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Entre les mondes – un espace suspendu de réflexions philosophiques et de fragments intérieurs."
+  />
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-mid: #0b1120;
+      --bg-soft: rgba(15, 23, 42, 0.78);
+      --accent: #60a5fa;
+      --accent-soft: rgba(96, 165, 250, 0.35);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-soft: rgba(148, 163, 184, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%, #1d4ed8 0, transparent 55%),
+        radial-gradient(circle at 100% 10%, #22d3ee 0, transparent 50%),
+        radial-gradient(circle at 50% 100%, #1e293b 0, #020617 65%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow-x: hidden;
+    }
+
+    main {
+      position: relative;
+      width: 100%;
+      max-width: 880px;
+      padding: 3.5rem 1.5rem 4.5rem;
+      z-index: 1;
+    }
+
+    /* --- Brume animée en arrière-plan --- */
+    .aura {
+      position: fixed;
+      inset: -10%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      opacity: 0.9;
+    }
+
+    .aura::before,
+    .aura::after {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 999px;
+      filter: blur(55px);
+      opacity: 0.55;
+      mix-blend-mode: screen;
+    }
+
+    .aura::before {
+      top: -80px;
+      left: -120px;
+      background: radial-gradient(circle, var(--accent-soft), transparent 60%);
+      animation: drift-left 46s ease-in-out infinite alternate;
+    }
+
+    .aura::after {
+      bottom: -140px;
+      right: -60px;
+      background: radial-gradient(circle, rgba(94, 234, 212, 0.35), transparent 65%);
+      animation: drift-right 58s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift-left {
+      0% {
+        transform: translate3d(0, 0, 0) scale(1);
+        opacity: 0.55;
+      }
+      50% {
+        transform: translate3d(40px, 30px, 0) scale(1.08);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translate3d(80px, -10px, 0) scale(1.02);
+        opacity: 0.5;
+      }
+    }
+
+    @keyframes drift-right {
+      0% {
+        transform: translate3d(0, 0, 0) scale(1);
+        opacity: 0.55;
+      }
+      50% {
+        transform: translate3d(-40px, -30px, 0) scale(1.1);
+        opacity: 0.75;
+      }
+      100% {
+        transform: translate3d(-70px, 20px, 0) scale(1.03);
+        opacity: 0.5;
+      }
+    }
+
+    .shell {
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), var(--bg-soft));
+      border-radius: 1.8rem;
+      border: 1px solid var(--border-soft);
+      box-shadow:
+        0 22px 50px rgba(15, 23, 42, 0.7),
+        0 0 0 1px rgba(148, 163, 184, 0.2);
+      padding: 2.5rem 2.25rem 2.75rem;
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at top,
+        rgba(148, 163, 255, 0.12),
+        transparent 60%
+      );
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    header {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 3.2vw, 2.6rem);
+      margin: 0 0 0.3rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .subtitle {
+      margin: 0.1rem 0 1rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .tagline {
+      margin: 0;
+      font-size: 0.98rem;
+      color: #cbd5f5;
+      max-width: 34rem;
+    }
+
+    nav {
+      margin-top: 1.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      font-size: 0.83rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-main);
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.8), rgba(15, 23, 42, 0.9));
+      backdrop-filter: blur(12px);
+      opacity: 0.9;
+      transition: opacity 0.2s ease, transform 0.18s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+
+    nav a:hover {
+      opacity: 1;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.7);
+    }
+
+    .section-title {
+      margin: 0 0 1.2rem;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    .texts-list {
+      position: relative;
+      padding-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    article {
+      position: relative;
+      padding: 1.6rem 1.4rem 1.7rem;
+      border-radius: 1.3rem;
+      background: radial-gradient(circle at top, rgba(30, 64, 175, 0.55), rgba(15, 23, 42, 0.96));
+      border: 1px solid rgba(129, 140, 248, 0.4);
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.85);
+      overflow: hidden;
+    }
+
+    article::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 120% -10%, rgba(94, 234, 212, 0.25), transparent 55%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .article-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .text-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.4rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .text-title {
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .text-info {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .texte {
+      font-size: 0.98rem;
+      line-height: 1.9;
+      color: #e5e7f5;
+      text-align: justify;
+    }
+
+    .texte p {
+      margin: 0 0 1rem;
+    }
+
+    .texte p:last-child {
+      margin-bottom: 0;
+    }
+
+    .texte p:first-of-type::first-letter {
+      font-size: 2.4rem;
+      float: left;
+      line-height: 1;
+      padding-right: 0.3rem;
+      padding-top: 0.1rem;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .quote {
+      font-style: italic;
+      margin-top: 1.2rem;
+      padding-left: 0.9rem;
+      border-left: 1px solid rgba(191, 219, 254, 0.6);
+      color: #dbeafe;
+      font-size: 0.96rem;
+    }
+
+    footer {
+      margin-top: 2.6rem;
+      padding-top: 1.4rem;
+      border-top: 1px dashed rgba(148, 163, 184, 0.4);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    footer span {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 720px) {
+      main {
+        padding: 2.4rem 1.1rem 3.4rem;
+      }
+
+      .shell {
+        padding: 2rem 1.4rem 2.2rem;
+        border-radius: 1.3rem;
+      }
+
+      nav {
+        gap: 0.45rem;
+      }
+
+      article {
+        padding: 1.4rem 1.1rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Brume animée de fond -->
+  <div class="aura" aria-hidden="true"></div>
+
+  <main>
+    <div class="shell">
+      <header>
+        <h1>Entre les mondes</h1>
+        <p class="subtitle">Textes & réflexions</p>
+        <p class="tagline">
+          Un espace infini dans lequel s'inscrivent les pensées qui ne savent où aller, brillantes, mortes ou éloignées, à l'image des étoiles.
+        </p>
+
+        <nav aria-label="Navigation principale">
+          <a href="#textes">Derniers textes</a>
+          <a href="#apropos">À propos</a>
+          <a href="#commentaires">Commentaires</a>
+        </nav>
+      </header>
+
+      <!-- ==================== TEXTES ==================== -->
+      <section id="textes" aria-label="Liste des textes">
+        <h2 class="section-title">Derniers textes</h2>
+
+        <div class="texts-list">
+          <!-- ========= TEXTE 1 : TON TEXTE ========= -->
+          <article id="ame-soeur-imaginaire">
+            <div class="article-inner">
+              <div class="text-meta">
+                <div class="text-title">L’âme sœur imaginaire</div>
+                <div class="text-info">
+                  Écrit le 19 novembre 2025
+                </div>
+              </div>
+
+              <div class="texte">
+                <p>
+                  Peut-on surmonter la déception liée à la compréhension que l’âme sœur, cette partie de nous qui nous manque, n’existe pas réellement ? Cette création imaginaire idéale ne peut se manifester dans la fixité, bien qu’instable, de la réalité. Cette entité a pourtant une existence tangible, entraînant des émotions partagées entre l’espoir tenace d’un jour la rencontrer et la tristesse éternelle de redécouvrir son caractère fondamentalement imaginaire. Une sensation d’« à quoi bon » peut ainsi finir par creuser une tombe dans laquelle le désespoir nous pousse et dont la lassitude est la gravité. Alors où la trouver ? Peut-on organiser des rendez-vous imaginaires pour la voir, pour enfin être comblé, entier ? Si oui, un monde imaginaire peut se substituer au monde réel, pour toujours peut-être. Pourquoi rester corps quand nous pouvons n’être qu’esprit ? Est-ce ça, la mort ?
+                </p>
+
+                <p>
+                  La découverte de son monde intérieur, de son immensité, de sa profondeur, semble avoir pour conséquence, peut-être temporaire mais puissante, d’être si éloignés des autres, de leur monde à eux. Si différent. Si loin. Si loin que la minuscule portion de réalité que nous partageons ensemble, avec en plus un regard différent, semble ridicule face à l’immensité de nos différences intérieures. Nous sommes seuls. Mais peut-être est-ce à travers cette petite zone de contact que l’ensemble de notre monde s’en trouve influencé. À l’image d’une cellule dont l’entièreté est influencée par une petite portion de membrane périphérique. À l’image d’un neurone.
+                </p>
+
+                <p>
+                  La difficulté réside dans la balance entre ces mondes. Comment les habiter ? S’agirait-il encore d’un équilibre à trouver ? Les va-et-vient de la conscience, ballotant entre ces mondes, peuvent donner le mal de mer, voire engendrer la perte totale de repères. Où suis-je ? Qui suis-je ? Suis-je seulement ?
+                </p>
+
+                <p class="quote">
+                  Il est intéressant de remarquer que cette réflexion, à l’heure où elle prend sa forme en mots, est accompagnée par une tristesse suffisamment légère pour me rappeler sans douleur ma propre existence, mais suffisamment intense pour m’ouvrir la lourde porte de l’inspiration. La tristesse, un bâton de sourcier à deux branches : l’une vers l’homme, l’autre vers la source.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <!-- ========= MODÈLE POUR UN FUTUR TEXTE ========= -->
+          <!--
+          <article id="un-autre-texte">
+            <div class="article-inner">
+              <div class="text-meta">
+                <div class="text-title">Titre de ton prochain texte</div>
+                <div class="text-info">Date ou petite note</div>
+              </div>
+
+              <div class="texte">
+                <p>
+                  Colle ici le texte de ton prochain fragment. Tu peux garder
+                  les paragraphes courts pour laisser respirer la page.
+                </p>
+              </div>
+            </div>
+          </article>
+          -->
+        </div>
+      </section>
+
+      <!-- ==================== À PROPOS ==================== -->
+      <section id="apropos" aria-label="À propos" style="margin-top:3rem;">
+        <h2 class="section-title">À propos</h2>
+
+        <article style="
+          background: radial-gradient(circle at top, rgba(30,64,175,0.35), rgba(15,23,42,0.85));
+          border:1px solid rgba(129,140,248,0.3);
+          border-radius:1.3rem;
+          padding:1.6rem 1.4rem 1.7rem;
+          box-shadow:0 12px 28px rgba(15,23,42,0.7);
+        ">
+          <div class="texte">
+            <p>
+              Mon nom est Élouan Brume, ou plutôt mon pseudo, devant mettre une distance entre ce qui me traverse et ce que je me sens devoir incarner à travers mon nom d'usage. Ce lieu est né d’un besoin : celui de déposer quelque part les questions, les pensées qui s'accrochent et que je fais miennes, avant qu'elles ne se décrochent.
+            </p>
+
+            <p>
+            <em>Entre les mondes</em> est un passage, un seuil, un espace ou peut-être un chemin.
+              Ici, je dépose quelques pierres empilées sur le côté d’un sentier peu fréquenté, sans savoir si quelqu’un les verra et ce qu’il en pensera. Le long d’un sentier, pas au milieu de nul part, pour que quelqu’un puisse les voir. Oui quand même. C’est important pour l’intention au moment où je les dépose, qu’il y ait une petite probabilité qu’elles soient découvertes. Une fois déposées, ça n’aura plus d’importance, ou moins, en tous cas pas la même. L’interprétation que fera ce quelqu’un est son histoire. Le simple fait de déposer ces pierres est donc mon cadeau. Mon cadeau pour moi-même. Pour vous chers-es lecteurs-trices, je me garderais d’en juger.
+            </p>
+
+            <p>
+              Dans cet espace, soyez les bienvenus-es.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <!-- ==================== COMMENTAIRES ==================== -->
+      <section id="commentaires" style="margin-top:3.2rem;">
+        <h2 class="section-title">Commentaires</h2>
+
+        <div style="
+          background: radial-gradient(circle at top, rgba(30,64,175,0.25), rgba(15,23,42,0.7));
+          border-radius: 1.2rem;
+          padding: 1.4rem 1rem;
+          border: 1px solid rgba(129, 140, 248, 0.25);
+          box-shadow: 0 8px 18px rgba(15,23,42,0.55);
+        ">
+          <!-- Script fourni par giscus.app -->
+          <!-- Quand tu auras configuré Giscus, colle ici le <script> généré -->
+        </div>
+      </section>
+
+      <footer>
+        <span>Là où les mondes se touchent, quelque chose s’écrit.</span>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>
